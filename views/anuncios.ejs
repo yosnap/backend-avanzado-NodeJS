@@ -1,0 +1,62 @@
+<%- include ("header") -%>
+
+<div style="padding:2em;">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Lista de anuncios</h1>
+      <p class="lead">Listando: <%= anuncios.length %> de <%= total %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead><tr>
+          <th>Nombre</th>
+          <th>Modo</th>
+          <th style="text-align: right">Precio</th>
+          <th>Foto</th>
+          <th>Tags</th>
+          <th>#</th>
+        </tr></thead>
+        <tbody>
+<% anuncios.forEach((anuncio) => { %>
+          <tr>
+            <td><%= anuncio.nombre %></td>
+            <td><%= anuncio.venta ? 'Venta' : 'Compra' %></td>
+            <td style="text-align: right"><%= anuncio.precio %>€</td>
+            <td>
+              <img class="img-thumbnail"  style="width:10rem;" src="/images/<%= anuncio.imagen %>">
+            </td>
+            <td><%= anuncio.tags %></td>
+            <td><%= anuncio._id %></td>
+          </tr>
+<% }); %>
+        </tbody>
+      </table>
+
+      <p>Ejemplos:</p>
+
+      <ul>
+        <li><a href="?">Todos (max. 1000)</a></li>
+        <li><a href="?start=2&limit=2">Paginado</a></li>
+        <li><a href="?max=12">Hasta 12€</a></li>
+        <li><a href="?min=12">Desde  12€</a></li>
+        <li><a href="?tag=mobile">Con tag mobile</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <a href="/">Volver a inicio</a>
+
+</div>
+<script>
+  const images = document.querySelectorAll('img');
+  images.forEach(image => {
+    image.addEventListener('load',() => {
+      if(image.naturalHeight === 0) image.src = '/images/Not.png'
+    })
+  });
+</script>
+<%- include("footer") -%>

@@ -1,0 +1,67 @@
+<%- include("header") -%>
+
+<fieldset style="margin-left:2em;">
+  <legend id="langs" class="mt-4"></legend>
+  <span style="float:left;">es</span>
+  <div style="margin-left:1em;" class="form-check form-switch">
+    <input id="switch" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+    <label class="form-check-label" for="flexSwitchCheckDefault">en</label>
+  </div>
+</fieldset>
+<br>
+<script>
+  const title = document.getElementById('langs');
+  const hlink = document.getElementById('home-link');
+  const tlink = document.getElementById('tags-link');
+  title.innerText = "Idiomas"
+  document.getElementById('switch').addEventListener("change",e => {
+    if(e.target.checked){ 
+      title.innerText = 'Languajes';
+      hlink.innerText = 'Home';
+      tlink.innerText = 'Tags';
+    }else{
+      title.innerText = 'Idiomas';
+      hlink.innerText = 'Inicio';
+      tlink.innerText = 'Etiquetas';
+    } ;
+  })
+</script>
+
+<pre id="es"> 
+  <%= leeme %>
+</pre>
+<pre id="en"> 
+  <%= readme %>
+</pre>
+
+<div id="main"></div>
+
+
+<style>body {padding-top:0;}</style>
+<script src="/scripts/showdown.min.js"></script>
+<script>
+  const es = document.getElementById('es').innerHTML;
+  const en = document.getElementById('en').innerHTML;
+  const main = document.getElementById('main');
+  const converter = new showdown.Converter();
+  const spanish = converter.makeHtml(es);
+  const english = converter.makeHtml(en);
+  main.innerHTML = spanish;
+  const swich = document.getElementById('switch').addEventListener('change', e => {
+    e.target.checked ? main.innerHTML = english  : main.innerHTML = spanish;
+  });
+  
+</script>
+<style>
+  pre#es {
+    display: none;    
+  }
+  pre#en {
+    display: none;    
+  }
+  #main {
+    padding:2em;
+  }
+</style>
+
+<%- include("footer") -%>
